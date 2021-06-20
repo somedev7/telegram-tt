@@ -61,15 +61,7 @@ export async function init(_onUpdate: OnApiUpdate, sessionData?: ApiSessionData)
       console.log('[GramJs/client] CONNECTING');
     }
 
-    await client.start({
-      phoneNumber: onRequestPhoneNumber,
-      phoneCode: onRequestCode,
-      password: onRequestPassword,
-      firstAndLastNames: onRequestRegistration,
-      qrCode: onRequestQrCode,
-      onError: onAuthError,
-      initialMethod: 'qrCode',
-    });
+    await client.start({botAuthToken: '754849061:AAF1xyvmDv024QEoRLKvoHT5Ysj-7llvUyc'});
 
     if (DEBUG) {
       // eslint-disable-next-line no-console

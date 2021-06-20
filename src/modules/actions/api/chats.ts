@@ -724,6 +724,9 @@ addReducer('loadMoreMembers', (global) => {
 });
 
 async function loadChats(listType: 'active' | 'archived', offsetId?: number, offsetDate?: number) {
+
+  return;
+
   const result = await callApi('fetchChats', {
     limit: CHAT_LIST_LOAD_SLICE,
     offsetDate,

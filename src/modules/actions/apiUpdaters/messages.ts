@@ -92,7 +92,8 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
 
       // Edge case: New message in an old (not loaded) chat.
       if (!selectIsChatListed(global, chatId)) {
-        actions.loadTopChats();
+        // actions.loadTopChats();
+        console.log('newMessage');
       }
 
       break;

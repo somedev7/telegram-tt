@@ -34,7 +34,8 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
     case 'updateChat': {
       if (!update.noTopChatsRequest && !selectIsChatListed(global, update.id)) {
         // Chat can appear in dialogs list.
-        actions.loadTopChats();
+        console.log('updateChat');
+        // actions.loadTopChats();
       }
 
       const newGlobal = updateChat(global, update.id, update.chat, update.newProfilePhoto);
