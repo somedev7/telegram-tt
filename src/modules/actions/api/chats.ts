@@ -724,7 +724,7 @@ addReducer('loadMoreMembers', (global) => {
 });
 
 async function loadChats(listType: 'active' | 'archived', offsetId?: number, offsetDate?: number) {
-
+  console.log('loadChats prevented');
   return;
 
   const result = await callApi('fetchChats', {

@@ -35,10 +35,17 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
       if (!update.noTopChatsRequest && !selectIsChatListed(global, update.id)) {
         // Chat can appear in dialogs list.
         console.log('updateChat');
-        // actions.loadTopChats();
+        actions.loadTopChats();
       }
 
       const newGlobal = updateChat(global, update.id, update.chat, update.newProfilePhoto);
+      console.log('newGlobal.chats', newGlobal.chats);
+      const active = newGlobal.chats.listIds.active || [];
+      const chatId = update.chat.id!;
+      if (!active.includes(chatId)) {
+        active.push(chatId);
+      }
+      newGlobal.chats.listIds.active = active;
       setGlobal(newGlobal);
 
       const unreadCount = selectCountNotMutedUnread(newGlobal);

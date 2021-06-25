@@ -45,6 +45,7 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
   switch (update['@type']) {
     case 'newMessage': {
       const { chatId, id, message } = update;
+      console.log('global chats', global.chats);
       global = updateWithLocalMedia(global, chatId, id, message);
       global = updateListedAndViewportIds(global, message as ApiMessage);
 
