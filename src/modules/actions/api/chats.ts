@@ -176,6 +176,64 @@ addReducer('loadTopChats', () => {
   runThrottledForLoadTopChats(() => loadChats('active'));
 });
 
+addReducer('addChat', (global, actions, payload) => {
+  const {chatId} = payload;
+  console.log('addChat', global);
+  if (chatId in global.chats.byId) {
+    // add normal chat
+    console.log('chat', global.chats.byId[chatId]);
+  }
+  if (!(chatId in global.users.byId)) {
+    console.log('no user in global');
+    return;
+  }
+  console.log('user', global.users.byId[chatId]);
+  const user = global.users.byId[chatId];
+  const chat: ApiChat = {
+    accessHash: user.accessHash,
+    adminRights: undefined,
+    avatarHash: user.avatarHash,
+    currentUserBannedRights: undefined,
+    defaultBannedRights: undefined,
+    folderId: 0,
+    fullInfo: undefined,
+    hasPrivateLink: false,
+    hasUnreadMark: false,
+    id: user.id,
+    isCallActive: false,
+    isCallNotEmpty: false,
+    isCreator: false,
+    isMin: user.isMin,
+    isMuted: false,
+    isNotJoined: false,
+    isRestricted: false,
+    isSignaturesShown: false,
+    isSupport: false,
+    isVerified: false,
+    joinDate: 0,
+    lastMessage: undefined,
+    lastReadInboxMessageId: 0,
+    lastReadOutboxMessageId: 0,
+    membersCount: 0,
+    photos: user.photos,
+    restrictionReason: undefined,
+    title: user.firstName + (user.lastName ? ' ' + user.lastName : ''),
+    type: 'chatTypePrivate',
+    typingStatus: undefined,
+    unreadCount: 0,
+    unreadMentionsCount: 0,
+    username: user.username
+  };
+  global = updateChat(global, chatId, chat);
+  const listIds = global.chats.listIds.active || [];
+  listIds.push(chatId);
+  global = updateChatListIds(global, 'active', listIds);
+  const chats = global.chats;
+  chats.totalCount.all = (chats.totalCount.all || 0) + 1;
+  setGlobal(global);
+  console.log('global', global);
+});
+
 addReducer('requestChatUpdate', (global, actions, payload) => {
   const { serverTimeOffset } = global;
   const { chatId } = payload!;

@@ -20,7 +20,7 @@ const requestStatesByCallback = new Map<AnyToVoidFunction, RequestStates>();
 
 // TODO Re-use `util/WorkerConnector.ts`
 
-export function initApi(onUpdate: OnApiUpdate, sessionData?: ApiSessionData) {
+export function initApi(onUpdate: OnApiUpdate, sessionData?: ApiSessionData, botToken?: string) {
   if (!worker) {
     if (DEBUG) {
       // eslint-disable-next-line no-console
@@ -33,7 +33,7 @@ export function initApi(onUpdate: OnApiUpdate, sessionData?: ApiSessionData) {
 
   return makeRequest({
     type: 'initApi',
-    args: [sessionData],
+    args: [sessionData, botToken],
   });
 }
 

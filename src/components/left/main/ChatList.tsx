@@ -111,8 +111,11 @@ const ChatList: FC<OwnProps & StateProps & DispatchProps> = ({
     folderType === 'all' && !ALL_CHATS_PRELOAD_DISABLED,
   );
 
+  console.log('viewportIds', viewportIds);
+
   // TODO Refactor to not call `prepareChatList` twice
   const chatArrays = viewportIds && prepareChatList(chatsById, viewportIds, currentPinnedIds, folderType);
+
 
   useEffect(() => {
     if (lastSyncTime && folderType === 'all') {

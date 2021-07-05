@@ -518,5 +518,5 @@ function buildInputPrivacyRules(global: GlobalState, {
 }
 
 addReducer('updateIsOnline', (global, actions, payload) => {
-  callApi('updateIsOnline', payload);
+  // callApi('updateIsOnline', payload);
 });

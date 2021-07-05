@@ -32,7 +32,7 @@ let onUpdate: OnApiUpdate;
 let client: TelegramClient;
 let isConnected = false;
 
-export async function init(_onUpdate: OnApiUpdate, sessionData?: ApiSessionData) {
+export async function init(_onUpdate: OnApiUpdate, sessionData?: ApiSessionData, botToken?: string) {
   onUpdate = _onUpdate;
 
   if (DEBUG) {
@@ -61,7 +61,7 @@ export async function init(_onUpdate: OnApiUpdate, sessionData?: ApiSessionData)
       console.log('[GramJs/client] CONNECTING');
     }
 
-    await client.start({botAuthToken: '754849061:AAF1xyvmDv024QEoRLKvoHT5Ysj-7llvUyc'});
+    await client.start({botAuthToken: botToken!});
 
     if (DEBUG) {
       // eslint-disable-next-line no-console

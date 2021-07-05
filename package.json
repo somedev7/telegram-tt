@@ -21,11 +21,6 @@
     "node": "^12.13",
     "npm": "^6.12"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsc && lint-staged -- --fix"
-    }
-  },
   "lint-staged": {
     "*.{ts,tsx}": "eslint"
   },

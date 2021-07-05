@@ -24,8 +24,10 @@ import {
   clearLegacySessions,
   importTestSession,
 } from './sessions';
+import {ApiSessionData} from "../../../api/types";
 
-addReducer('initApi', (global: GlobalState, actions) => {
+addReducer('initApi', (global: GlobalState, actions, payload) => {
+  const botToken = payload;
   (async () => {
     if (!IS_TEST) {
       await importLegacySession();
@@ -34,7 +36,7 @@ addReducer('initApi', (global: GlobalState, actions) => {
       importTestSession();
     }
 
-    void initApi(actions.apiUpdate, loadStoredSession());
+    void initApi(actions.apiUpdate, loadStoredSession(), botToken);
   })();
 });
 
@@ -61,6 +63,14 @@ addReducer('setAuthCode', (global, actions, payload) => {
     authError: undefined,
   };
 });
+
+addReducer('setAuthBotToken', (global, actions, payload) => {
+  const { botToken } = payload!;
+
+  console.log('setAuthBotToken', botToken);
+
+  return global;
+})
 
 addReducer('setAuthPassword', (global, actions, payload) => {
   const { password } = payload!;

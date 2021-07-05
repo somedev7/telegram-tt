@@ -27,7 +27,7 @@ export interface WorkerMessageEvent {
 export type OriginRequest = {
   type: 'initApi';
   messageId?: string;
-  args: [ApiSessionData | undefined];
+  args: [ApiSessionData | undefined, string | undefined];
 } | {
   type: 'callMethod';
   messageId?: string;

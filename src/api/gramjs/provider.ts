@@ -18,7 +18,7 @@ import * as methods from './methods';
 
 let onUpdate: OnApiUpdate;
 
-export async function initApi(_onUpdate: OnApiUpdate, sessionData?: ApiSessionData) {
+export async function initApi(_onUpdate: OnApiUpdate, sessionData?: ApiSessionData, botToken?: string) {
   onUpdate = _onUpdate;
 
   initUpdater(handleUpdate);
@@ -30,7 +30,7 @@ export async function initApi(_onUpdate: OnApiUpdate, sessionData?: ApiSessionDa
   initManagement(handleUpdate);
   initTwoFaSettings(handleUpdate);
 
-  await initClient(handleUpdate, sessionData);
+  await initClient(handleUpdate, sessionData, botToken);
 }
 
 export function callApi<T extends keyof Methods>(fnName: T, ...args: MethodArgs<T>): MethodResponse<T> {

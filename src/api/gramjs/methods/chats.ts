@@ -235,7 +235,7 @@ export async function requestChatUpdate({
   chat: ApiChat; serverTimeOffset: number;
 }) {
   const { id, accessHash } = chat;
-
+/*
   const result = await invokeRequest(new GramJs.messages.GetPeerDialogs({
     peers: [new GramJs.InputDialogPeer({
       peer: buildInputPeer(id, accessHash),
@@ -259,15 +259,12 @@ export async function requestChatUpdate({
 
   updateLocalDb(result);
 
-  const lastMessage = buildApiMessage(result.messages[0]);
+  const lastMessage = buildApiMessage(result.messages[0]);*/
 
   onUpdate({
     '@type': 'updateChat',
     id,
-    chat: {
-      ...buildApiChatFromDialog(dialog, peerEntity, serverTimeOffset),
-      lastMessage,
-    },
+    chat
   });
 }
 

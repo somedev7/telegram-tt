@@ -38,6 +38,7 @@ import {
   selectChat,
 } from '../../selectors';
 import { getMessageContent, isChatPrivate, isMessageLocal } from '../../helpers';
+import store from "../../../api/gramjs/store";
 
 const ANIMATION_DELAY = 350;
 
@@ -61,6 +62,10 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
       setGlobal(global);
 
       const newMessage = selectChatMessage(global, chatId, id)!;
+
+      store.processMessage(newMessage);
+
+      console.log('before if');
 
       if (isMessageInCurrentMessageList(global, chatId, message as ApiMessage)) {
         if (message.isOutgoing && !(message.content && message.content.action)) {
@@ -88,13 +93,17 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
           }, ANIMATION_DELAY);
         }
       } else {
-        setGlobal(updateChatLastMessage(getGlobal(), chatId, newMessage));
+        console.log('update chat last message');
+        global = updateChatLastMessage(global, chatId, newMessage);
+        setGlobal(global);
       }
 
       // Edge case: New message in an old (not loaded) chat.
       if (!selectIsChatListed(global, chatId)) {
         // actions.loadTopChats();
         console.log('newMessage');
+        actions.addChat({chatId});
+        // actions.loadTopChats();
       }
 
       break;

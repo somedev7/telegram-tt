@@ -12,6 +12,7 @@ import AuthCode from './AuthCode.async';
 import AuthPassword from './AuthPassword.async';
 import AuthRegister from './AuthRegister.async';
 import AuthQrCode from './AuthQrCode';
+import AuthBotToken from './AuthBotToken';
 
 import './Auth.scss';
 
@@ -21,8 +22,14 @@ type DispatchProps = Pick<GlobalActions, 'reset' | 'initApi'>;
 const Auth: FC<StateProps & DispatchProps> = ({ authState, reset, initApi }) => {
   useEffect(() => {
     reset();
-    initApi();
-  }, [reset, initApi]);
+    // initApi();
+  },  [reset, initApi]);
+
+
+  const onBotTokenSubmit = (token: string) => {
+    console.log('submit token', token);
+    initApi(token);
+  };
 
   switch (authState) {
     case 'authorizationStateWaitCode':
@@ -35,7 +42,8 @@ const Auth: FC<StateProps & DispatchProps> = ({ authState, reset, initApi }) => 
       return <UiLoader page="authPhoneNumber" key="authPhoneNumber"><AuthPhoneNumber /></UiLoader>;
     case 'authorizationStateWaitQrCode':
     default:
-      return <UiLoader page="authQrCode" key="authQrCode"><AuthQrCode /></UiLoader>;
+      // return <UiLoader page="authQrCode" key="authQrCode"><AuthQrCode /></UiLoader>;
+      return <UiLoader page="authBotToken" key="authBotToken"><AuthBotToken onSubmit={onBotTokenSubmit} /></UiLoader>;
   }
 };
 

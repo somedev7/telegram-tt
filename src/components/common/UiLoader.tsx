@@ -24,7 +24,7 @@ import monkeyPath from '../../assets/monkey.svg';
 import { selectIsRightColumnShown } from '../../modules/selectors';
 
 type OwnProps = {
-  page: 'main' | 'authCode' | 'authPassword' | 'authPhoneNumber' | 'authQrCode';
+  page: 'main' | 'authCode' | 'authPassword' | 'authPhoneNumber' | 'authQrCode' | 'authBotToken';
   children: any;
 };
 

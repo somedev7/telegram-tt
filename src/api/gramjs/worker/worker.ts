@@ -20,17 +20,22 @@ if (DEBUG) {
 onmessage = async (message: OriginMessageEvent) => {
   const { data } = message;
 
+  console.log('onmessage', data.type);
+
   switch (data.type) {
     case 'initApi': {
-      await initApi(onUpdate, data.args[0]);
+      await initApi(onUpdate, data.args[0], data.args[1]);
       break;
     }
     case 'callMethod': {
       const { messageId, name, args } = data;
+      console.log('callMethod', data);
       try {
         if (messageId) {
           const callback = (...callbackArgs: any[]) => {
             const lastArg = callbackArgs[callbackArgs.length - 1];
+
+            console.log('callback', callbackArgs);
 
             sendToOrigin({
               type: 'methodCallback',

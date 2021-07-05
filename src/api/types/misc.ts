@@ -53,4 +53,5 @@ export interface ApiSessionData {
   mainDcId: number;
   keys: Record<number, string | number[]>;
   hashes: Record<number, string | number[]>;
+  botToken?: string;
 }

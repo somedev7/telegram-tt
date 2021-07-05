@@ -44,6 +44,7 @@ import { fetchFile } from '../../../util/files';
 import { addMessageToLocalDb, resolveMessageApiChatId } from '../helpers';
 import { interpolateArray } from '../../../util/waveform';
 import { requestChatUpdate } from './chats';
+import store from "../store";
 
 const FAST_SEND_TIMEOUT = 1000;
 const INPUT_WAVEFORM_LENGTH = 63;
@@ -65,6 +66,30 @@ export async function fetchMessages({
   addOffset?: number;
   limit: number;
 }) {
+/*  let ttMessages: any = localStorage.getItem('tt-ttMessages');
+  if (!ttMessages) {
+    return undefined;
+  }
+  ttMessages = JSON.parse(ttMessages);
+  if (!(chat.id in ttMessages)) {
+    return undefined;
+  }
+
+  return undefined;
+
+  return {
+    messages: ttMessages[chat.id]
+  };*/
+  if (2 === 2) {
+    return {
+      messages: store.getMessages(chat.id),
+      users: store.getUsers(),
+      chats: store.getChats(),
+      threadInfos: []
+    };
+  }
+
+
   const RequestClass = threadId === MAIN_THREAD_ID ? GramJs.messages.GetHistory : GramJs.messages.GetReplies;
   let result;
 

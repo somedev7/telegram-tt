@@ -3,6 +3,7 @@ import { ApiUser } from '../../api/types';
 
 import { omit } from '../../util/iteratees';
 import { MEMO_EMPTY_ARRAY } from '../../util/memo';
+import store from "../../api/gramjs/store";
 
 export function replaceUsers(global: GlobalState, newById: Record<number, ApiUser>): GlobalState {
   return {
@@ -17,11 +18,14 @@ export function updateUser(global: GlobalState, userId: number, userUpdate: Part
   const { byId } = global.users;
   const { hash, userIds: contactUserIds } = global.contactList || {};
   const user = byId[userId];
+  console.log('byId', byId, 'user', byId[userId]);
   const shouldOmitMinInfo = userUpdate.isMin && user && !user.isMin;
   const updatedUser = {
     ...user,
     ...(shouldOmitMinInfo ? omit(userUpdate, ['isMin', 'accessHash']) : userUpdate),
   };
+
+  store.addUser(user);
 
   if (!updatedUser.id || !updatedUser.type) {
     return global;

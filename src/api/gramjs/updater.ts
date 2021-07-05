@@ -52,6 +52,7 @@ const sentMessageIds = new Set();
 let serverTimeOffset = 0;
 
 export function updater(update: Update, originRequest?: GramJs.AnyRequest) {
+  console.log('update', update);
   if (update instanceof connection.UpdateServerTimeOffset) {
     serverTimeOffset = update.timeOffset;
   } else if (update instanceof connection.UpdateConnectionState) {
