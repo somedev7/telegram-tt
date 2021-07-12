@@ -21,6 +21,7 @@ import useLang, { LangFn } from '../../hooks/useLang';
 import Avatar from './Avatar';
 import VerifiedIcon from './VerifiedIcon';
 import TypingStatus from './TypingStatus';
+import {prepareBotApiChatId} from "../../util/common";
 
 type OwnProps = {
   chatId: number;
@@ -111,7 +112,7 @@ const GroupChatInfo: FC<OwnProps & StateProps & DispatchProps> = ({
     return (
       <div className="status">
         {handle && <span className="handle">{handle}</span>}
-        <span className="group-status">{groupStatus}</span>
+        <span className="group-status">{groupStatus} id: {prepareBotApiChatId(chat.id)}</span>
         {onlineStatus && <span className="online-status">{onlineStatus}</span>}
       </div>
     );

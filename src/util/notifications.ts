@@ -131,6 +131,9 @@ let areSettingsLoaded = false;
 
 // Load notification settings from the api
 async function loadNotificationSettings() {
+  console.log('prevented', 'loadNotificationSettings');
+  return;
+
   if (areSettingsLoaded) return;
   const [result] = await Promise.all([
     callApi('fetchNotificationSettings', {

@@ -305,10 +305,14 @@ addReducer('terminateAllAuthorizations', () => {
 });
 
 addReducer('loadNotificationExceptions', () => {
-  callApi('fetchNotificationExceptions');
+  console.log('prevented fetchNotificationExceptions');
+  // callApi('fetchNotificationExceptions');
 });
 
 addReducer('loadNotificationSettings', (global) => {
+  console.log('prevented', 'loadNotificationSettings');
+  return;
+
   const { serverTimeOffset } = global;
   (async () => {
     const result = await callApi('fetchNotificationSettings', {

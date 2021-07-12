@@ -20,7 +20,7 @@ if (DEBUG) {
 onmessage = async (message: OriginMessageEvent) => {
   const { data } = message;
 
-  console.log('onmessage', data.type);
+  console.log('onmessage', message);
 
   switch (data.type) {
     case 'initApi': {

@@ -23,6 +23,7 @@ import ProfilePhoto from './ProfilePhoto';
 import Transition from '../ui/Transition';
 
 import './ProfileInfo.scss';
+import {prepareBotApiChatId} from "../../util/common";
 
 type OwnProps = {
   userId: number;
@@ -159,7 +160,7 @@ const PrivateChatInfo: FC<OwnProps & StateProps & DispatchProps> = ({
     if (user) {
       return (
         <div className={`status ${isUserOnline(user) ? 'online' : ''}`}>
-          <span className="user-status" dir="auto">{getUserStatus(lang, user, serverTimeOffset)}</span>
+          <span className="user-status" dir="auto">{getUserStatus(lang, user, serverTimeOffset)} id: {prepareBotApiChatId(user.id)}</span>
         </div>
       );
     }

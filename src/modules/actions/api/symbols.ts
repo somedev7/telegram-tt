@@ -202,6 +202,9 @@ async function loadRecentStickers(hash = 0) {
 }
 
 async function loadFavoriteStickers(hash = 0) {
+  console.log('prevented', 'loadFavoriteStickers');
+  return;
+
   const favoriteStickers = await callApi('fetchFavoriteStickers', { hash });
   if (!favoriteStickers) {
     return;

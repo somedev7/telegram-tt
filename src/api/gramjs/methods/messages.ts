@@ -646,6 +646,10 @@ export async function markMessageListRead({
 }: {
   chat: ApiChat; threadId: number; maxId?: number; serverTimeOffset: number;
 }) {
+  console.log('prevented markMessageListRead');
+  return;
+
+
   const isChannel = getEntityTypeById(chat.id) === 'channel';
 
   if (isChannel && threadId === MAIN_THREAD_ID) {

@@ -860,6 +860,9 @@ async function loadPinnedMessages(chat: ApiChat) {
 }
 
 async function loadScheduledHistory(chat: ApiChat, historyHash?: number) {
+  console.log('prevented', 'loadScheduledHistory');
+  return;
+
   const result = await callApi('fetchScheduledHistory', { chat, hash: historyHash });
   if (!result) {
     return;

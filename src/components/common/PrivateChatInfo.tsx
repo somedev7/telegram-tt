@@ -17,6 +17,7 @@ import useLang from '../../hooks/useLang';
 import Avatar from './Avatar';
 import VerifiedIcon from './VerifiedIcon';
 import TypingStatus from './TypingStatus';
+import {prepareBotApiChatId} from "../../util/common";
 
 type OwnProps = {
   userId: number;
@@ -108,7 +109,7 @@ const PrivateChatInfo: FC<OwnProps & StateProps & DispatchProps> = ({
     return (
       <div className={`status ${isUserOnline(user) ? 'online' : ''}`}>
         {withUsername && user.username && <span className="handle">{user.username}</span>}
-        <span className="user-status" dir="auto">{getUserStatus(lang, user, serverTimeOffset)}</span>
+        <span className="user-status" dir="auto">{getUserStatus(lang, user, serverTimeOffset)} id: {prepareBotApiChatId(user.id)}</span>
       </div>
     );
   }

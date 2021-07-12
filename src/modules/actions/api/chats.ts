@@ -921,6 +921,9 @@ async function createGroupChat(title: string, users: ApiUser[], photo?: File) {
 }
 
 async function loadChatFolders() {
+  console.log('prevented', 'loadChatFolders');
+  return;
+
   const chatFolders = await callApi('fetchChatFolders');
 
   if (chatFolders) {

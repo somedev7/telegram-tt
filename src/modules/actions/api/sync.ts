@@ -82,6 +82,9 @@ async function afterSync(actions: GlobalActions) {
 }
 
 async function loadAndReplaceChats() {
+  console.log('prevented', 'loadAndReplaceChats');
+  return;
+
   const result = await callApi('fetchChats', {
     limit: CHAT_LIST_LOAD_SLICE,
     withPinned: true,
@@ -163,6 +166,10 @@ async function loadAndReplaceChats() {
 }
 
 async function loadAndReplaceArchivedChats() {
+  console.log('prevented', 'loadAndReplaceArchivedChats');
+  return;
+
+
   const result = await callApi('fetchChats', {
     limit: CHAT_LIST_LOAD_SLICE,
     archived: true,
