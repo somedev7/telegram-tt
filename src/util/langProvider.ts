@@ -147,6 +147,7 @@ export async function setLanguage(langCode: string, callback?: NoneToVoidFunctio
 }
 
 async function fetchFromCacheOrRemote(langCode: string): Promise<ApiLangPack | undefined> {
+  return undefined; // todo: return en langpack
   const cached = await cacheApi.fetch(LANG_CACHE_NAME, langCode, cacheApi.Type.Json);
   if (cached) {
     return cached;

@@ -127,6 +127,7 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
 
       const currentMessage = selectChatMessage(global, chatId, id);
       if (!currentMessage) {
+        console.log('updateMessage no current message');
         return;
       }
 

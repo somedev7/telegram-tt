@@ -18,7 +18,6 @@ export function updateUser(global: GlobalState, userId: number, userUpdate: Part
   const { byId } = global.users;
   const { hash, userIds: contactUserIds } = global.contactList || {};
   const user = byId[userId];
-  console.log('byId', byId, 'user', byId[userId]);
   const shouldOmitMinInfo = userUpdate.isMin && user && !user.isMin;
   const updatedUser = {
     ...user,

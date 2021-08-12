@@ -81,8 +81,9 @@ export async function fetchMessages({
     messages: ttMessages[chat.id]
   };*/
   if (2 === 2) {
+    const messages = await store.getMessages(chat.id);
     return {
-      messages: store.getMessages(chat.id),
+      messages,
       users: store.getUsers(),
       chats: store.getChats(),
       threadInfos: []
