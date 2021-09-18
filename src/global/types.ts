@@ -467,7 +467,7 @@ export type ActionTypes = (
   'validateRequestedInfo' | 'setPaymentStep' | 'sendPaymentForm' | 'getPaymentForm' | 'getReceipt' |
   'sendCredentialsInfo' | 'setInvoiceMessageInfo' | 'clearPaymentError' | 'clearReceipt' |
   // custom
-  'addChat'
+  'saveChat'
 );
 
 export type GlobalActions = Record<ActionTypes, (...args: any[]) => void>;

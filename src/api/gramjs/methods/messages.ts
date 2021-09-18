@@ -66,26 +66,14 @@ export async function fetchMessages({
   addOffset?: number;
   limit: number;
 }) {
-/*  let ttMessages: any = localStorage.getItem('tt-ttMessages');
-  if (!ttMessages) {
-    return undefined;
-  }
-  ttMessages = JSON.parse(ttMessages);
-  if (!(chat.id in ttMessages)) {
-    return undefined;
-  }
-
-  return undefined;
-
-  return {
-    messages: ttMessages[chat.id]
-  };*/
   if (2 === 2) {
     const messages = await store.getMessages(chat.id);
+    const users = await store.getUsers();
+    const chats = await store.getChats();
     return {
       messages,
-      users: store.getUsers(),
-      chats: store.getChats(),
+      users,
+      chats,
       threadInfos: []
     };
   }

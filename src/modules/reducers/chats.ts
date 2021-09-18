@@ -3,6 +3,7 @@ import { ApiChat, ApiPhoto } from '../../api/types';
 
 import { ARCHIVED_FOLDER_ID } from '../../config';
 import { omit } from '../../util/iteratees';
+import store from "../../api/gramjs/store";
 
 export function replaceChatListIds(
   global: GlobalState,
@@ -58,6 +59,8 @@ export function updateChat(
     ...(shouldOmitMinInfo ? omit(chatUpdate, ['isMin', 'accessHash']) : chatUpdate),
     ...(photo && { photos: [photo, ...(chat.photos || [])] }),
   };
+
+  // store.saveChat(chat);
 
   if (!updatedChat.id || !updatedChat.type) {
     return global;

@@ -45,6 +45,8 @@ import {
   isChatSummaryOnly, isChatArchived, prepareChatList, isChatBasicGroup,
 } from '../../helpers';
 
+import store from '../../../api/gramjs/store';
+
 const TOP_CHATS_PRELOAD_PAUSE = 100;
 // We expect this ID does not exist
 const TMP_CHAT_ID = -1;
@@ -176,9 +178,9 @@ addReducer('loadTopChats', () => {
   runThrottledForLoadTopChats(() => loadChats('active'));
 });
 
-addReducer('addChat', (global, actions, payload) => {
+addReducer('saveChat', (global, actions, payload) => {
   const {chatId} = payload;
-  console.log('addChat', global);
+  console.log('saveChat', global);
   if (chatId in global.chats.byId) {
     // add normal chat
     console.log('chat', global.chats.byId[chatId]);
@@ -782,9 +784,19 @@ addReducer('loadMoreMembers', (global) => {
 });
 
 async function loadChats(listType: 'active' | 'archived', offsetId?: number, offsetDate?: number) {
-  console.log('loadChats prevented');
-  return;
+  console.log('loadChats');
+  const chats = await store.getChats();
+  const result = {
+    chatIds: [],
+    chats,
+    users: [],
+    draftsById: {},
+    replyingToById: {},
+    orderedPinnedIds: undefined,
+    totalChatCount: chats.length
+  };
 
+/*
   const result = await callApi('fetchChats', {
     limit: CHAT_LIST_LOAD_SLICE,
     offsetDate,
@@ -792,6 +804,7 @@ async function loadChats(listType: 'active' | 'archived', offsetId?: number, off
     withPinned: getGlobal().chats.orderedPinnedIds[listType] === undefined,
     serverTimeOffset: getGlobal().serverTimeOffset,
   });
+*/
 
   if (!result) {
     return;

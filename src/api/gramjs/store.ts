@@ -1,12 +1,23 @@
 import {ApiChat, ApiMessage, ApiUser} from "../types";
 import {IDBPDatabase, openDB, DBSchema} from 'idb';
+import {getGlobal} from "../../lib/teact/teactn";
 
 const DB_NAME = 'store';
-const STORE_NAME = 'messages';
+const STORE_NAME_MESSAGES = 'messages';
+const STORE_NAME_CHATS = 'chats';
+const STORE_NAME_USERS = 'users';
 
 interface StoreDb extends DBSchema {
-  [STORE_NAME]: {
+  [STORE_NAME_MESSAGES]: {
     value: ApiMessage[],
+    key: number
+  },
+  [STORE_NAME_CHATS]: {
+    value: ApiChat,
+    key: number
+  },
+  [STORE_NAME_USERS]: {
+    value: ApiUser,
     key: number
   }
 }
@@ -20,33 +31,39 @@ class LocalStore {
   async init() {
     this.db = await openDB(DB_NAME, 1, {
       upgrade(db) {
-        db.createObjectStore(STORE_NAME);
+        db.createObjectStore(STORE_NAME_MESSAGES);
+        db.createObjectStore(STORE_NAME_CHATS);
+        db.createObjectStore(STORE_NAME_USERS);
       }
     });
   }
 
   public async getMessages(chatId: number) : Promise<ApiMessage[]> {
-    const messages = await this.db!.get(STORE_NAME, chatId);
-    console.log('idb messages', messages && messages[messages.length - 1]);
+    const messages = await this.db!.get(STORE_NAME_MESSAGES, chatId);
+    console.log('idb messages', messages);
     return messages || [];
     // return this.messages[chatId] || [];
   }
 
-  public getUsers() : ApiUser[] {
-    return this.users;
+  public async getUsers() {
+    let users = await this.db!.getAll(STORE_NAME_USERS);
+    console.log('idb users', users);
+    return users;
   }
 
-  public getChats() : ApiChat[] {
-    return this.chats;
+  public async getChats() {
+    let chats = await this.db!.getAll(STORE_NAME_CHATS);
+    console.log('idb chats', chats);
+    return chats;
   }
 
   public async processMessage(message: ApiMessage) {
-    let messages = await this.db!.get(STORE_NAME, message.chatId);
+    let messages = await this.db!.get(STORE_NAME_MESSAGES, message.chatId);
     if (!messages) {
       messages = [];
     }
     messages.push(message);
-    await this.db!.put(STORE_NAME, messages, message.chatId);
+    await this.db!.put(STORE_NAME_MESSAGES, messages, message.chatId);
 
 
     /*const chatId = message.chatId;
@@ -57,12 +74,32 @@ class LocalStore {
     console.log('message', JSON.stringify(message));*/
   }
 
-  public addUser(user: ApiUser) {
-    this.users.push(user);
+  public async updateMessage(chatId: number, localId: number, newMessage: ApiMessage) {
+    let messages = await this.db!.get(STORE_NAME_MESSAGES, chatId);
+    if (!messages) {
+      messages = [];
+    }
+    let index = messages.findIndex(msg => msg.id === localId);
+    if (index > -1) {
+      console.log('store.updateMessage', newMessage);
+      messages[index] = newMessage;
+    }
+    await this.db!.put(STORE_NAME_MESSAGES, messages, chatId);
   }
 
-  public addChat(chat: ApiChat) {
-    this.chats.push(chat);
+  public async saveUser(user: ApiUser) {
+    if (!user) {
+      return;
+    }
+    await this.db!.put(STORE_NAME_USERS, user, user.id);
+  }
+
+  public async saveChat(chat: ApiChat) {
+    console.log('saveChat');
+    if (!chat) {
+      return;
+    }
+    await this.db!.put(STORE_NAME_CHATS, chat, chat.id);
   }
 }
 

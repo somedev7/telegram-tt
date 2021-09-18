@@ -76,10 +76,15 @@ const ChatList: FC<OwnProps & StateProps & DispatchProps> = ({
       : [listIds, orderedPinnedIds];
   }, [folderType, chatFolder, chatsById, usersById, notifySettings, notifyExceptions, listIds, orderedPinnedIds]);
 
+  console.log('current list ids', currentListIds);
+  console.log('chats by id', chatsById, listIds);
+
   const [orderById, orderedIds] = useMemo(() => {
+    console.log('useMemo orderById', currentListIds, folderType, chatFolder);
     if (!currentListIds || (folderType === 'folder' && !chatFolder)) {
       return [];
     }
+    console.log('current list ids in memo', currentListIds);
     const newChatArrays = prepareChatList(chatsById, currentListIds, currentPinnedIds, folderType);
     const singleList = [...newChatArrays.pinnedChats, ...newChatArrays.otherChats];
     const newOrderedIds = singleList.map(({ id }) => id);
@@ -90,6 +95,7 @@ const ChatList: FC<OwnProps & StateProps & DispatchProps> = ({
 
     return [newOrderById, newOrderedIds];
   }, [currentListIds, currentPinnedIds, folderType, chatFolder, chatsById]);
+  console.log('orderedIds', orderedIds);
 
   const prevOrderById = usePrevious(orderById);
 

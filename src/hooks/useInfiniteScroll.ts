@@ -25,6 +25,7 @@ export default (
   const viewportIdsRef = useRef<number[] | undefined>((() => {
     // Only run once to initialize
     if (!listIds || lastParamsRef.current) {
+      console.log('no listIds', listIds, lastParamsRef.current);
       return undefined;
     }
 

@@ -24,7 +24,7 @@ export function updateUser(global: GlobalState, userId: number, userUpdate: Part
     ...(shouldOmitMinInfo ? omit(userUpdate, ['isMin', 'accessHash']) : userUpdate),
   };
 
-  store.addUser(user);
+  store.saveUser(user);
 
   if (!updatedUser.id || !updatedUser.type) {
     return global;

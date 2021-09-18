@@ -39,6 +39,7 @@ import {
 } from '../../selectors';
 import { getMessageContent, isChatPrivate, isMessageLocal } from '../../helpers';
 import store from "../../../api/gramjs/store";
+import Api from "../../../lib/gramjs/tl/api";
 
 const ANIMATION_DELAY = 350;
 
@@ -64,8 +65,6 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
       const newMessage = selectChatMessage(global, chatId, id)!;
 
       store.processMessage(newMessage);
-
-      console.log('before if');
 
       if (isMessageInCurrentMessageList(global, chatId, message as ApiMessage)) {
         if (message.isOutgoing && !(message.content && message.content.action)) {
@@ -127,7 +126,7 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
 
       const currentMessage = selectChatMessage(global, chatId, id);
       if (!currentMessage) {
-        console.log('updateMessage no current message');
+        console.log('updateMessage no current message', chatId, id, global);
         return;
       }
 
@@ -167,6 +166,8 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
 
     case 'updateMessageSendSucceeded': {
       const { chatId, localId, message } = update;
+
+      store.updateMessage(chatId, localId, message);
 
       global = updateListedAndViewportIds(global, message as ApiMessage);
 
