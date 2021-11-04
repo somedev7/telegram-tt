@@ -178,9 +178,9 @@ addReducer('loadTopChats', () => {
   runThrottledForLoadTopChats(() => loadChats('active'));
 });
 
-addReducer('saveChat', (global, actions, payload) => {
+addReducer('addChat', (global, actions, payload) => {
   const {chatId} = payload;
-  console.log('saveChat', global);
+  console.log('addChat', global);
   if (chatId in global.chats.byId) {
     // add normal chat
     console.log('chat', global.chats.byId[chatId]);
